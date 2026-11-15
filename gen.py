@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import csv
+import json
 import urllib.parse as U
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+EXPORT = json.loads((ROOT / "data/export-summary.json").read_text())
 S = {
     r[0]: dict(stars=int(r[1]), forks=int(r[2]), lic=r[3], lang=r[4], push=r[5])
     for r in csv.reader((ROOT / "stats.tsv").open(), delimiter="\t")
@@ -158,6 +160,113 @@ def estimate(text):
     return f'<span class="ev-est">{text}</span>'
 
 
+def goal(text):
+    return f'<span class="ev-goal">{text}</span>'
+
+
+def patents_section():
+    tesla_n = EXPORT["tesla_official_rows"]
+    tesla_us = EXPORT["tesla_official_jurisdictions"]["US"]
+    tesla_enriched = EXPORT["tesla_official_enriched_with_google_patents"]
+    tesla_gp = EXPORT["tesla_google_core_rows"]
+    tesla_gp_overlap = EXPORT["tesla_google_core_also_on_official_list"]
+    byd_unique = EXPORT["byd_assignee_unique_ids"]
+    byd_n = EXPORT["byd_ev_filtered_rows"]
+    byd_focus = EXPORT["byd_focus_rows"]
+    tags = EXPORT["byd_focus_tag_counts"]
+    return f"""## Open patents and pledges
+
+This section is a research summary of public statements and patent records, not legal advice. Patent pledges and royalty-free programmes have conditions, time limits and exceptions. A listing here does not grant a licence, confirm that a patent is in force, or mean it is free to use. Read the official terms and get legal advice before relying on any pledge.
+
+Figures and statements below use the same evidence tags as the dashboard: {fact("FACT")} from a named source, {goal("GOAL")} for a stated plan or an unmeasured manufacturer claim, and {estimate("ESTIMATE")} for counts this project computed. Source notes and export limits are in [data/README.md](data/README.md). The machine-readable files are [tesla-patents.csv](data/tesla-patents.csv), [byd-patents.csv](data/byd-patents.csv) and [ev-patent-pledges.csv](data/ev-patent-pledges.csv).
+
+### Tesla Patent Pledge
+
+On {fact("12 June 2014")}, Tesla published [All Our Patent Are Belong To You](https://www.tesla.com/blog/all-our-patent-are-belong-you), announcing that it "will not initiate patent lawsuits against anyone who, in good faith, wants to use our technology."
+
+The current legal terms are on Tesla's [Additional Resources](https://www.tesla.com/legal/additional-resources) page (anchors `#patent-pledge` and `#patent-list`). As of the archives checked for this snapshot, those terms say:
+
+<table>
+<tr><th>Term</th><th>What Tesla's legal page says</th></tr>
+<tr><td>Pledge</td><td>Tesla {fact("irrevocably pledges")} that it will not initiate a lawsuit against any party for infringing a Tesla Patent through activity relating to electric vehicles or related equipment for so long as that party is acting in good faith.</td></tr>
+<tr><td>Legal effect</td><td>The pledge is a {fact("standstill")} (forbearance of enforcement). It is {fact("not a licence, covenant not to sue, waiver, or authorisation")} to practise the patents.</td></tr>
+<tr><td>Good faith</td><td>Good faith excludes, among other things, asserting intellectual property rights against Tesla, asserting patent rights against a third party for use of electric-vehicle technologies, challenging Tesla patents, or marketing knock-off Tesla products.</td></tr>
+<tr><td>Tesla Patents</td><td>This means all patents owned now or in the future by Tesla, other than a patent owned jointly with a third party or a later-acquired patent that comes with an encumbrance that prevents it from being subject to the pledge.</td></tr>
+<tr><td>List</td><td>Tesla says a list of Tesla Patents subject to the pledge will be maintained on that legal page.</td></tr>
+</table>
+
+Tesla does not publish filing dates, legal status or CPC classes on that list, and this project does not treat the list as a complete legal map of the broader "now or in the future" definition.
+
+The itemised table was recovered from official-page archives dated {fact("6 May 2019")} and {fact("8 January 2024")} (see data/README.md for the Wayback captures). Both captures contain the {fact(f"same {tesla_n} entries")}. {estimate(str(tesla_us))} of those numbers are US filings; the rest are AU, CA, CN, DE, EP, FR, GB, HK, JP or KR, so {tesla_n} is not {tesla_n} distinct inventions. {estimate(str(tesla_enriched))} official numbers were matched to a Google Patents record in this snapshot so that dates and a precise document id could be added; the other rows have a search link only. The export is data/tesla-patents.csv.
+
+A {fact("12 March 2025")} archive of the same legal page still has the pledge wording and the `#patent-list` URL, but the captured HTML does not include the itemised table.
+
+A separate Google Patents assignee export on {fact("15 November 2026")} found {estimate(str(tesla_gp))} Tesla-related records after filtering out unrelated assignees. {estimate(str(tesla_gp_overlap))} of those also appear on the official {tesla_n}-entry list. That Google Patents file is a public-database supplement, not Tesla's itemisation of pledge coverage, and it is saved as [tesla-patents-google.csv](data/tesla-patents-google.csv).
+
+### NACS and SAE J3400
+
+On {fact("11 November 2022")}, Tesla published [Opening the North American Charging Standard](https://www.tesla.com/blog/opening-north-american-charging-standard). It invited charging networks and vehicle makers to use the Tesla connector and charge port, then renamed NACS, and said the design and specification files were available for download while Tesla worked with standards bodies.
+
+Tesla's [Charging & Adapter Product Guides](https://www.tesla.com/support/charging/product-guides) were later updated on {fact("30 September 2024")}: as NACS is recognised in an SAE Recommended Practice under SAE J3400, Tesla removed the technical specifications and CAD from its website and said those files are now available in the SAE J3400 Recommended Practice.
+
+{fact("SAE J3400_202409")}, [North American Charging System (NACS) for Electric Vehicles](https://saemobilus.sae.org/standards/j3400_202409-north-american-charging-system-nacs-electric-vehicles), is the SAE Recommended Practice dated September 2024. This is an opened connector design that became a public standard, not a patent pledge. Performance comparisons in Tesla's 2022 blog, including "up to 1 MW DC charging", are Tesla's own statements.
+
+### Other pledges and licences
+
+<table>
+<tr><th>Programme</th><th>When</th><th>What it is</th><th>Official source</th></tr>
+<tr>
+<td>Toyota fuel-cell licences</td>
+<td>{fact("6 January 2015")}</td>
+<td>Royalty-free licences on about {fact("5,680")} FCV-related patents, under a contract with Toyota. Licences for manufacturing and selling FCVs were offered through the initial market introduction period, anticipated until about the {fact("end of 2020")} — that stated window has ended. About {fact("70")} hydrogen-station patents were said to remain open for an unlimited duration.</td>
+<td><a href="https://global.toyota/en/detail/4663648">Toyota global release</a></td>
+</tr>
+<tr>
+<td>Toyota electrification licences</td>
+<td>{fact("3 April 2019")}</td>
+<td>Royalty-free licences on nearly {fact("24,000")} patents (Toyota's own figure is approximately {fact("23,740")}) for vehicle electrification technologies, through the {fact("end of 2030")}, under a contract. Separate technical support is {fact("fee-based")}. The end-2030 date is a stated term ({goal("GOAL")} of the programme's duration, as published by Toyota).</td>
+<td><a href="https://global.toyota/en/newsroom/corporate/27512455.html">Toyota newsroom</a></td>
+</tr>
+<tr>
+<td>Ford electrified-vehicle patents</td>
+<td>{fact("28 May 2015")}</td>
+<td>Ford offered competitors access to its electrified-vehicle patent portfolio. It said it had more than {fact("650")} electrified-vehicle patents and approximately {fact("1,000")} pending applications. The patents were {fact("available for a fee")} — this is licensing, not a free pledge.</td>
+<td><a href="https://media.ford.com/content/fordmedia/fna/us/en/news/2015/05/28/ford-opens-portfolio-of-patented-technologies-to-competitors-to-.html">Ford Media announcement</a></td>
+</tr>
+<tr>
+<td>Low Carbon Patent Pledge</td>
+<td>{fact("22 April 2021")}</td>
+<td>A royalty-free licence, launched by Hewlett Packard Enterprise, Microsoft and Meta, limited to practising pledged patents for the use, generation, storage or distribution of low-carbon energy from solar, wind, ocean, hydropower or geothermal sources. It is not a general EV-vehicle patent pledge. The licence has a defensive-termination clause. LCPP later said {fact("563")} pledged patents had been uploaded to WIPO GREEN.</td>
+<td><a href="https://lowcarbonpatentpledge.org/the-pledge/">The Pledge</a></td>
+</tr>
+<tr>
+<td>Eco-Patent Commons</td>
+<td>{fact("January 2008")} – {fact("May 2016")}</td>
+<td>A shared commons for environmentally beneficial patents. It was {fact("discontinued in May 2016")}.</td>
+<td><a href="https://houstonlawreview.org/article/10854-pledging-patents-for-the-public-good-rise-and-fall-of-the-eco-patent-commons">Houston Law Review history</a></td>
+</tr>
+</table>
+
+Volvo's 2024 electric-sales announcements were about vehicle-mix targets, not an open patent pledge, so they are not listed. This snapshot also did not find a verified official GM or Hyundai open EV patent pledge, and it does not treat Open Invention Network or LOT Network as EV patent pledges (they are defensive patent networks).
+
+### BYD technology
+
+No verified BYD patent pledge or royalty-free patent licence was found in this snapshot. The rows in data/byd-patents.csv are public patent records, not open patents.
+
+Google Patents assignee exports for "BYD Co Ltd" and "BYD Company Limited" on {fact("15 November 2026")} produced {estimate(f"{byd_unique:,}")} unique BYD-assignee records before filtering (ESTIMATE, and possibly incomplete). After a title-keyword filter for EV-relevant filings, {estimate(f"{byd_n:,}")} records remain, of which {estimate(str(byd_focus))} match a focus topic: Blade Battery or 刀片 ({estimate(str(tags.get("blade_battery", 0)))}), LFP or cell-to-pack ({estimate(str(tags.get("lfp_ctp", 0)))}), e-Platform or 8-in-1 ({estimate(str(tags.get("e_platform", 0)))}), DM-i or hybrid ({estimate(str(tags.get("dmi_hybrid", 0)))}), cell-to-body ({estimate(str(tags.get("cell_to_body", 0)))}), and Super e-Platform or megawatt flash charging ({estimate(str(tags.get("super_e_flash", 0)))}). Those tag counts are keyword ESTIMATEs. Marketing names rarely appear in patent titles, so they are not a catalogue of every related filing.
+
+Official BYD technology pages, with stated specs tagged as claims unless independently measured here:
+
+- [Blade Battery](https://en.byd.com/news/byds-new-blade-battery-set-to-redefine-ev-safety-standards/) - BYD said long cells are arranged in an array in the pack and that pack space utilisation increased by over {fact("50%")} compared with conventional lithium-iron-phosphate block batteries. A later official EU page, [BYD's revolutionary Blade Battery](https://www.byd.com/eu/blog/BYDs-revolutionary-Blade-Battery-all-you-need-to-know.html), says the Blade Battery was launched in {fact("March 2020")} and describes this as BYD {fact("CTP (cell-to-pack)")} technology. Partnership language on the announcement page about sharing the technology with global partners is not a patent pledge.
+- [e-Platform 3.0](https://en.byd.com/news/byd-debuts-e-platform-3-0-leading-the-next-generation-of-smart-electric-vehicles/) - Officially debuted on {fact("19 April 2021")} at the Shanghai Auto Show. BYD said the platform "will continue to be open to the industry." That is a stated product-platform policy, not an open-source software licence and not a patent pledge. A later official EU page, [Why is BYD's e-Platform 3.0 so special?](https://www.byd.com/eu/blog/Why-is-BYDs-e-Platform-3-0-so-special.html), describes the platform as launched in {fact("September 2021")}. Manufacturer-stated figures from those pages — including {goal("89%")} system efficiency, {goal("800 V")} fast charging, {goal("5 minutes")} of charge for {goal("90 miles")}, a {goal("0.21")} drag coefficient, and a vehicle OS "fully open to developers" — are BYD claims, not measurements made for this list. The same debut release introduced the 2021 Tang DM-i super-hybrid and stated fuel consumption as low as {goal("1.4 gallons per 60 miles")} with a comprehensive range of {goal("600 miles")}.
+- [Cell-to-body (CTB)](https://www.byd.com/eu/news-list/BYD_SEAL_Dynamic_and_Intelligent) - Presented with the BYD SEAL on {fact("12 April 2023")}. BYD said SEAL is the first vehicle to implement CTB, integrating the Blade Battery into the body. Stated figures such as {goal("66%")} pack volume utilisation, {goal("10%")} system energy density and {goal("40,500 N·m/degree")} torsional stiffness are BYD claims.
+- [Super e-Platform](https://www.byd.com/en/news-list/BYD-Unveils-Super-e-Platform-Megawatt-Flash-Charging-Electric-Vehicles-Matching-Refueling-Speeds) - Unveiled on {fact("17 March 2025")}. BYD described a full-domain {goal("1000 V")} architecture, {goal("1000 kW")} megawatt flash charging, a peak of {goal("2 km")} of range per second, and {goal("400 km")} of range in {goal("5 minutes")}, first on the Han L and Tang L in China. It also said it plans to build over {goal("4,000")} megawatt flash-charging stations in China. Those charging performance figures and the station rollout are BYD's stated specs and plans, not independent measurements.
+
+On open software and developer access, this snapshot found BYD's DiLink / open-innovation site at [oip.byd.com](https://oip.byd.com/) (比亚迪汽车工业有限公司). The page itself did not load from this environment, so its current developer terms were not verified here. No official BYD Company GitHub organisation was verified: `github.com/byd` is a personal account, and `github.com/BYDcar` is not listed here as an official BYD release.
+
+"""
+
+
 tools = [t for _, ts in C for t in ts]
 missing = [t[1] for t in tools if t[1] not in S]
 if missing:
@@ -204,6 +313,7 @@ Related lists: [Awesome Craft](https://github.com/EdisonTKPcom/Awesome-Craft), [
 """
 )
 o += ["- [Dashboard](#dashboard)"] + [f"- [{n}](#{anchor(n)})" for n, _ in C]
+o += ["- [Open patents and pledges](#open-patents-and-pledges)"]
 o.append("\n## Dashboard\n")
 o.append(
     f"""<style>
@@ -232,7 +342,7 @@ o.append(
 <tr><td><span class="ev-est">ESTIMATE</span></td><td>dotted underline</td><td>A sum or count we computed from the facts.</td></tr>
 </table>
 
-This snapshot has no GOAL figures. None of the dashboard numbers come from project roadmaps.
+This snapshot's dashboard has no GOAL figures. None of the dashboard numbers come from project roadmaps. GOAL tags are used later, in the Open patents and pledges section, for stated plans and manufacturer claims.
 
 **Sources and method**
 
@@ -290,6 +400,7 @@ for n, ts in C:
             f"- [{t[0]}](https://github.com/{t[1]}) - {desc} ![Stars](https://img.shields.io/github/stars/{t[1]}?style=flat-square&label=%E2%AD%90)"
         )
     o.append("")
+o.append(patents_section())
 o.append(
     "## Contributing\n\nContributions welcome! Read the [contribution guidelines](contributing.md) first.\n\n"
     '<div align="center">\n\n'

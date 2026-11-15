@@ -1,0 +1,35 @@
+{
+  "fetched": "2026-11-15",
+  "fetched_zone": "Asia/Kuala_Lumpur (UTC+8)",
+  "tesla_official_rows": 361,
+  "tesla_official_enriched_with_google_patents": 163,
+  "tesla_official_jurisdictions": {
+    "AU": 1,
+    "CA": 5,
+    "CN": 5,
+    "DE": 22,
+    "EP": 22,
+    "FR": 14,
+    "GB": 14,
+    "HK": 1,
+    "JP": 27,
+    "KR": 1,
+    "US": 249
+  },
+  "tesla_google_core_rows": 1139,
+  "tesla_google_core_also_on_official_list": 163,
+  "byd_google_raw_rows": 45906,
+  "byd_google_unique_ids": 33320,
+  "byd_assignee_unique_ids": 33254,
+  "byd_ev_filtered_rows": 3934,
+  "byd_focus_rows": 446,
+  "byd_ev_keyword_rows": 3488,
+  "byd_focus_tag_counts": {
+    "dmi_hybrid": 368,
+    "lfp_ctp": 61,
+    "blade_battery": 9,
+    "e_platform": 7,
+    "cell_to_body": 1
+  },
+  "pledge_rows": 7
+}

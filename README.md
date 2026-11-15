@@ -37,6 +37,7 @@ Related lists: [Awesome Craft](https://github.com/EdisonTKPcom/Awesome-Craft), [
 - [Charging maps and open data](#charging-maps-and-open-data)
 - [Fleet, routing and V2G simulation](#fleet-routing-and-v2g-simulation)
 - [DIY conversions](#diy-conversions)
+- [Open patents and pledges](#open-patents-and-pledges)
 
 ## Dashboard
 
@@ -66,7 +67,7 @@ Related lists: [Awesome Craft](https://github.com/EdisonTKPcom/Awesome-Craft), [
 <tr><td><span class="ev-est">ESTIMATE</span></td><td>dotted underline</td><td>A sum or count we computed from the facts.</td></tr>
 </table>
 
-This snapshot has no GOAL figures. None of the dashboard numbers come from project roadmaps.
+This snapshot's dashboard has no GOAL figures. None of the dashboard numbers come from project roadmaps. GOAL tags are used later, in the Open patents and pledges section, for stated plans and manufacturer claims.
 
 **Sources and method**
 
@@ -217,6 +218,97 @@ These badge counts are ESTIMATE tallies of the SPDX identifier GitHub returned f
 - [ccs32clara](https://github.com/uhi22/ccs32clara) - STM32 and QCA7005 CCS charge-controller project for DIY and research use. High-voltage and mains work needs qualified handling. ![Stars](https://img.shields.io/github/stars/uhi22/ccs32clara?style=flat-square&label=%E2%AD%90)
 - [OpenInverter VCU](https://github.com/jsphuebner/stm32-vcu) - Vehicle control unit for EV conversion projects, a companion to the OpenInverter firmware. High-voltage work needs qualified handling. ![Stars](https://img.shields.io/github/stars/jsphuebner/stm32-vcu?style=flat-square&label=%E2%AD%90)
 - [pyPLC](https://github.com/uhi22/pyPLC) - Python tools for investigating CCS and ISO 15118 charging at the power-line communication layer. High-voltage work needs qualified handling. ![Stars](https://img.shields.io/github/stars/uhi22/pyPLC?style=flat-square&label=%E2%AD%90)
+
+## Open patents and pledges
+
+This section is a research summary of public statements and patent records, not legal advice. Patent pledges and royalty-free programmes have conditions, time limits and exceptions. A listing here does not grant a licence, confirm that a patent is in force, or mean it is free to use. Read the official terms and get legal advice before relying on any pledge.
+
+Figures and statements below use the same evidence tags as the dashboard: <span class="ev-fact">FACT</span> from a named source, <span class="ev-goal">GOAL</span> for a stated plan or an unmeasured manufacturer claim, and <span class="ev-est">ESTIMATE</span> for counts this project computed. Source notes and export limits are in [data/README.md](data/README.md). The machine-readable files are [tesla-patents.csv](data/tesla-patents.csv), [byd-patents.csv](data/byd-patents.csv) and [ev-patent-pledges.csv](data/ev-patent-pledges.csv).
+
+### Tesla Patent Pledge
+
+On <span class="ev-fact">12 June 2014</span>, Tesla published [All Our Patent Are Belong To You](https://www.tesla.com/blog/all-our-patent-are-belong-you), announcing that it "will not initiate patent lawsuits against anyone who, in good faith, wants to use our technology."
+
+The current legal terms are on Tesla's [Additional Resources](https://www.tesla.com/legal/additional-resources) page (anchors `#patent-pledge` and `#patent-list`). As of the archives checked for this snapshot, those terms say:
+
+<table>
+<tr><th>Term</th><th>What Tesla's legal page says</th></tr>
+<tr><td>Pledge</td><td>Tesla <span class="ev-fact">irrevocably pledges</span> that it will not initiate a lawsuit against any party for infringing a Tesla Patent through activity relating to electric vehicles or related equipment for so long as that party is acting in good faith.</td></tr>
+<tr><td>Legal effect</td><td>The pledge is a <span class="ev-fact">standstill</span> (forbearance of enforcement). It is <span class="ev-fact">not a licence, covenant not to sue, waiver, or authorisation</span> to practise the patents.</td></tr>
+<tr><td>Good faith</td><td>Good faith excludes, among other things, asserting intellectual property rights against Tesla, asserting patent rights against a third party for use of electric-vehicle technologies, challenging Tesla patents, or marketing knock-off Tesla products.</td></tr>
+<tr><td>Tesla Patents</td><td>This means all patents owned now or in the future by Tesla, other than a patent owned jointly with a third party or a later-acquired patent that comes with an encumbrance that prevents it from being subject to the pledge.</td></tr>
+<tr><td>List</td><td>Tesla says a list of Tesla Patents subject to the pledge will be maintained on that legal page.</td></tr>
+</table>
+
+Tesla does not publish filing dates, legal status or CPC classes on that list, and this project does not treat the list as a complete legal map of the broader "now or in the future" definition.
+
+The itemised table was recovered from official-page archives dated <span class="ev-fact">6 May 2019</span> and <span class="ev-fact">8 January 2024</span> (see data/README.md for the Wayback captures). Both captures contain the <span class="ev-fact">same 361 entries</span>. <span class="ev-est">249</span> of those numbers are US filings; the rest are AU, CA, CN, DE, EP, FR, GB, HK, JP or KR, so 361 is not 361 distinct inventions. <span class="ev-est">163</span> official numbers were matched to a Google Patents record in this snapshot so that dates and a precise document id could be added; the other rows have a search link only. The export is data/tesla-patents.csv.
+
+A <span class="ev-fact">12 March 2025</span> archive of the same legal page still has the pledge wording and the `#patent-list` URL, but the captured HTML does not include the itemised table.
+
+A separate Google Patents assignee export on <span class="ev-fact">15 November 2026</span> found <span class="ev-est">1139</span> Tesla-related records after filtering out unrelated assignees. <span class="ev-est">163</span> of those also appear on the official 361-entry list. That Google Patents file is a public-database supplement, not Tesla's itemisation of pledge coverage, and it is saved as [tesla-patents-google.csv](data/tesla-patents-google.csv).
+
+### NACS and SAE J3400
+
+On <span class="ev-fact">11 November 2022</span>, Tesla published [Opening the North American Charging Standard](https://www.tesla.com/blog/opening-north-american-charging-standard). It invited charging networks and vehicle makers to use the Tesla connector and charge port, then renamed NACS, and said the design and specification files were available for download while Tesla worked with standards bodies.
+
+Tesla's [Charging & Adapter Product Guides](https://www.tesla.com/support/charging/product-guides) were later updated on <span class="ev-fact">30 September 2024</span>: as NACS is recognised in an SAE Recommended Practice under SAE J3400, Tesla removed the technical specifications and CAD from its website and said those files are now available in the SAE J3400 Recommended Practice.
+
+<span class="ev-fact">SAE J3400_202409</span>, [North American Charging System (NACS) for Electric Vehicles](https://saemobilus.sae.org/standards/j3400_202409-north-american-charging-system-nacs-electric-vehicles), is the SAE Recommended Practice dated September 2024. This is an opened connector design that became a public standard, not a patent pledge. Performance comparisons in Tesla's 2022 blog, including "up to 1 MW DC charging", are Tesla's own statements.
+
+### Other pledges and licences
+
+<table>
+<tr><th>Programme</th><th>When</th><th>What it is</th><th>Official source</th></tr>
+<tr>
+<td>Toyota fuel-cell licences</td>
+<td><span class="ev-fact">6 January 2015</span></td>
+<td>Royalty-free licences on about <span class="ev-fact">5,680</span> FCV-related patents, under a contract with Toyota. Licences for manufacturing and selling FCVs were offered through the initial market introduction period, anticipated until about the <span class="ev-fact">end of 2020</span> — that stated window has ended. About <span class="ev-fact">70</span> hydrogen-station patents were said to remain open for an unlimited duration.</td>
+<td><a href="https://global.toyota/en/detail/4663648">Toyota global release</a></td>
+</tr>
+<tr>
+<td>Toyota electrification licences</td>
+<td><span class="ev-fact">3 April 2019</span></td>
+<td>Royalty-free licences on nearly <span class="ev-fact">24,000</span> patents (Toyota's own figure is approximately <span class="ev-fact">23,740</span>) for vehicle electrification technologies, through the <span class="ev-fact">end of 2030</span>, under a contract. Separate technical support is <span class="ev-fact">fee-based</span>. The end-2030 date is a stated term (<span class="ev-goal">GOAL</span> of the programme's duration, as published by Toyota).</td>
+<td><a href="https://global.toyota/en/newsroom/corporate/27512455.html">Toyota newsroom</a></td>
+</tr>
+<tr>
+<td>Ford electrified-vehicle patents</td>
+<td><span class="ev-fact">28 May 2015</span></td>
+<td>Ford offered competitors access to its electrified-vehicle patent portfolio. It said it had more than <span class="ev-fact">650</span> electrified-vehicle patents and approximately <span class="ev-fact">1,000</span> pending applications. The patents were <span class="ev-fact">available for a fee</span> — this is licensing, not a free pledge.</td>
+<td><a href="https://media.ford.com/content/fordmedia/fna/us/en/news/2015/05/28/ford-opens-portfolio-of-patented-technologies-to-competitors-to-.html">Ford Media announcement</a></td>
+</tr>
+<tr>
+<td>Low Carbon Patent Pledge</td>
+<td><span class="ev-fact">22 April 2021</span></td>
+<td>A royalty-free licence, launched by Hewlett Packard Enterprise, Microsoft and Meta, limited to practising pledged patents for the use, generation, storage or distribution of low-carbon energy from solar, wind, ocean, hydropower or geothermal sources. It is not a general EV-vehicle patent pledge. The licence has a defensive-termination clause. LCPP later said <span class="ev-fact">563</span> pledged patents had been uploaded to WIPO GREEN.</td>
+<td><a href="https://lowcarbonpatentpledge.org/the-pledge/">The Pledge</a></td>
+</tr>
+<tr>
+<td>Eco-Patent Commons</td>
+<td><span class="ev-fact">January 2008</span> – <span class="ev-fact">May 2016</span></td>
+<td>A shared commons for environmentally beneficial patents. It was <span class="ev-fact">discontinued in May 2016</span>.</td>
+<td><a href="https://houstonlawreview.org/article/10854-pledging-patents-for-the-public-good-rise-and-fall-of-the-eco-patent-commons">Houston Law Review history</a></td>
+</tr>
+</table>
+
+Volvo's 2024 electric-sales announcements were about vehicle-mix targets, not an open patent pledge, so they are not listed. This snapshot also did not find a verified official GM or Hyundai open EV patent pledge, and it does not treat Open Invention Network or LOT Network as EV patent pledges (they are defensive patent networks).
+
+### BYD technology
+
+No verified BYD patent pledge or royalty-free patent licence was found in this snapshot. The rows in data/byd-patents.csv are public patent records, not open patents.
+
+Google Patents assignee exports for "BYD Co Ltd" and "BYD Company Limited" on <span class="ev-fact">15 November 2026</span> produced <span class="ev-est">33,254</span> unique BYD-assignee records before filtering (ESTIMATE, and possibly incomplete). After a title-keyword filter for EV-relevant filings, <span class="ev-est">3,934</span> records remain, of which <span class="ev-est">446</span> match a focus topic: Blade Battery or 刀片 (<span class="ev-est">9</span>), LFP or cell-to-pack (<span class="ev-est">61</span>), e-Platform or 8-in-1 (<span class="ev-est">7</span>), DM-i or hybrid (<span class="ev-est">368</span>), cell-to-body (<span class="ev-est">1</span>), and Super e-Platform or megawatt flash charging (<span class="ev-est">0</span>). Those tag counts are keyword ESTIMATEs. Marketing names rarely appear in patent titles, so they are not a catalogue of every related filing.
+
+Official BYD technology pages, with stated specs tagged as claims unless independently measured here:
+
+- [Blade Battery](https://en.byd.com/news/byds-new-blade-battery-set-to-redefine-ev-safety-standards/) - BYD said long cells are arranged in an array in the pack and that pack space utilisation increased by over <span class="ev-fact">50%</span> compared with conventional lithium-iron-phosphate block batteries. A later official EU page, [BYD's revolutionary Blade Battery](https://www.byd.com/eu/blog/BYDs-revolutionary-Blade-Battery-all-you-need-to-know.html), says the Blade Battery was launched in <span class="ev-fact">March 2020</span> and describes this as BYD <span class="ev-fact">CTP (cell-to-pack)</span> technology. Partnership language on the announcement page about sharing the technology with global partners is not a patent pledge.
+- [e-Platform 3.0](https://en.byd.com/news/byd-debuts-e-platform-3-0-leading-the-next-generation-of-smart-electric-vehicles/) - Officially debuted on <span class="ev-fact">19 April 2021</span> at the Shanghai Auto Show. BYD said the platform "will continue to be open to the industry." That is a stated product-platform policy, not an open-source software licence and not a patent pledge. A later official EU page, [Why is BYD's e-Platform 3.0 so special?](https://www.byd.com/eu/blog/Why-is-BYDs-e-Platform-3-0-so-special.html), describes the platform as launched in <span class="ev-fact">September 2021</span>. Manufacturer-stated figures from those pages — including <span class="ev-goal">89%</span> system efficiency, <span class="ev-goal">800 V</span> fast charging, <span class="ev-goal">5 minutes</span> of charge for <span class="ev-goal">90 miles</span>, a <span class="ev-goal">0.21</span> drag coefficient, and a vehicle OS "fully open to developers" — are BYD claims, not measurements made for this list. The same debut release introduced the 2021 Tang DM-i super-hybrid and stated fuel consumption as low as <span class="ev-goal">1.4 gallons per 60 miles</span> with a comprehensive range of <span class="ev-goal">600 miles</span>.
+- [Cell-to-body (CTB)](https://www.byd.com/eu/news-list/BYD_SEAL_Dynamic_and_Intelligent) - Presented with the BYD SEAL on <span class="ev-fact">12 April 2023</span>. BYD said SEAL is the first vehicle to implement CTB, integrating the Blade Battery into the body. Stated figures such as <span class="ev-goal">66%</span> pack volume utilisation, <span class="ev-goal">10%</span> system energy density and <span class="ev-goal">40,500 N·m/degree</span> torsional stiffness are BYD claims.
+- [Super e-Platform](https://www.byd.com/en/news-list/BYD-Unveils-Super-e-Platform-Megawatt-Flash-Charging-Electric-Vehicles-Matching-Refueling-Speeds) - Unveiled on <span class="ev-fact">17 March 2025</span>. BYD described a full-domain <span class="ev-goal">1000 V</span> architecture, <span class="ev-goal">1000 kW</span> megawatt flash charging, a peak of <span class="ev-goal">2 km</span> of range per second, and <span class="ev-goal">400 km</span> of range in <span class="ev-goal">5 minutes</span>, first on the Han L and Tang L in China. It also said it plans to build over <span class="ev-goal">4,000</span> megawatt flash-charging stations in China. Those charging performance figures and the station rollout are BYD's stated specs and plans, not independent measurements.
+
+On open software and developer access, this snapshot found BYD's DiLink / open-innovation site at [oip.byd.com](https://oip.byd.com/) (比亚迪汽车工业有限公司). The page itself did not load from this environment, so its current developer terms were not verified here. No official BYD Company GitHub organisation was verified: `github.com/byd` is a personal account, and `github.com/BYDcar` is not listed here as an official BYD release.
+
 
 ## Contributing
 
